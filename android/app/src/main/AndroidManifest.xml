@@ -1,9 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.bsmi.bsmi_calc_mobile">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
    <application
         android:label="bsmi_calc_mobile"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+       android:usesCleartextTraffic="true"
+       >
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -30,5 +36,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
     </application>
 </manifest>

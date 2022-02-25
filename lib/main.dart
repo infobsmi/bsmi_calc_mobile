@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_plus/webview_flutter_plus.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -59,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      if (Platform.isAndroid) WebView.platform = AndroidWebView();
     });
   }
 
@@ -77,8 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: WebView(initialUrl: "assets/public/index.html",),
-        
+      //body: WebView(initialUrl: "assets/public/index.html",),
+      body: WebViewPlus(
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (controller) {
+          controller.loadUrl('assets/public/index.html');
+        },
+      ),
       /*floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
