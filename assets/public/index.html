@@ -1,6 +1,6 @@
 <!doctype html><html><head>
     <meta charset="UTF-8"><title>BSMI科学计算器-128位高精度</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
     <style type="text/css">
         html {
@@ -21,27 +21,26 @@ body {
 #outlet {
     width: 100%;
     height: 90vh;
-    font-size: 2vw;
+    font-size: 5vw;
     overflow-x: auto;
     overflow-y: auto;
     display: block;
     clear:both;
     margin:0px;
-    padding: 0px;
+    padding: 1vw;
 }
 
 #calc-input {
     width: 80%;
-    font-size: 3vw;
-    height: 5vw;
-    margin: 10px auto;
+    font-size: 5vw;
+    height: 6vw;
     margin-left: 1vw;
     margin-right: 1vw;
     display: inline-block;
 
 }
 #clear-btn {
-    height:5vw;
+    height:6vw;
     margin: 1vw auto;
 }
 p {
@@ -51,22 +50,24 @@ p {
 }
 
 .pending-calc {
-    font-size: 3vw;
+    font-size: 5vw;
     color: black;
     text-align: left;
+    padding: 1vw;
 }
 
 .result {
-    font-size: 3vw;
+    font-size: 5vw;
     color: blue;
     font-weight: bold;
     padding-left: 3vw;
+    padding-top: 1vw;
     text-align: left;
 }
     </style>
 </head>
 <body>
-<input id="calc-input" placeholder="输入需要计算的数学表达式，如8+2，输回车开始计算" autofocus="true">
+<input id="calc-input" placeholder="输入需要计算的数学表达式，如8+2，输回车开始计算" autofocus="true" type="text">
 <button onclick="javascript:clearInput();" id="clear-btn">重置</button>
 <div id="outlet"></div>
 <script type="text/javascript">
@@ -105,7 +106,7 @@ var bigmath = math.create(math.all, {
 calcInput.addEventListener('keypress', (e) => {
     console.log(e.code);
     if (e.code == "Enter" || e.keyCode == '13') {
-        let calcResult = bigmath.evaluate(calcInput.value);
+        let calcResult = bigmath.evaluate(calcInput.value.replace("×", "*"));
         outLet.innerHTML = "<p class=\"pending-calc\">" + calcInput.value + "</p>" +
                            "<p class=\"result\">   " + calcResult + "</p>"  + outLet.innerHTML;
         calcInput.value = calcResult;
