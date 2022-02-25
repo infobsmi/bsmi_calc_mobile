@@ -68,7 +68,7 @@ p {
 </head>
 <body>
 <input id="calc-input" placeholder="输入需要计算的数学表达式，如8+2，输回车开始计算" autofocus="true" type="text">
-<button onclick="javascript:clearInput();" id="clear-btn">重置</button>
+<button onclick="javascript:return clearInput();" id="clear-btn">重置</button>
 <div id="outlet"></div>
 <script type="text/javascript">
 
@@ -117,6 +117,7 @@ calcInput.addEventListener('keypress', (e) => {
 
 function clearInput() {
     document.getElementById("calc-input").value = "";
+    return false;
 }
 </script>
 
