@@ -1,16 +1,10 @@
-# bsmi_calc_mobile
+# bsmi 高精度计算器
 
-bsmi calc for mobile(ios or android)
+超高精度跨平台计算器，支持IOS, android平台
 
-## Getting Started
+IOS | Android
+--|--
+<img src="https://user-images.githubusercontent.com/278153/155650076-00a9af29-5ab7-4e34-b47a-35bf72a4ab0c.png" width="480px"/> | <img src="https://user-images.githubusercontent.com/278153/155650124-33469888-b831-4c68-94f1-42ce54117fd2.png" width="480px"/>
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
