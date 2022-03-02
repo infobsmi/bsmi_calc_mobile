@@ -198,6 +198,7 @@ class _HomePageState extends State<HomePage> {
     Expression exp = p.parse(finaluserinput);
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
+    eval = double.parse(eval.toStringAsFixed(14));
     answer = eval.toString();
   }
 }
