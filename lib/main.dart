@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 // Array of button
   final List<String> buttons = [
     'C',
-    '+/-',
+    'CLS',
     '%',
     'DEL',
     '7',
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                         buttontapped: () {
                           setState(() {
                             userInput = '';
-                            answer = '';
+                            //answer = '';
                           });
                         },
                         buttonText: buttons[index],
@@ -111,6 +111,12 @@ class _HomePageState extends State<HomePage> {
                     // +/- button
                     else if (index == 1) {
                       return MyButton(
+                        buttontapped: () {
+                          setState(() {
+                            //userInput = '';
+                            answer = '';
+                          });
+                        },
                         buttonText: buttons[index],
                         color: Colors.blue[50],
                         textColor: Colors.black,
