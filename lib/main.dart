@@ -24,11 +24,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var userInput = '';
   var answer = '';
+  var historyAnswer = '';
 
 // Array of button
   final List<String> buttons = [
-    'C',
     'CLS',
+    'C',
     '%',
     'DEL',
     '7',
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
                       child: Text(
                         userInput,
@@ -72,12 +73,23 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(15),
+                      padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
                       child: Text(
                         answer,
                         style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(2),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        historyAnswer,
+                        style: TextStyle(
+                            fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
@@ -93,11 +105,12 @@ class _HomePageState extends State<HomePage> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4),
                   itemBuilder: (BuildContext context, int index) {
-                    // Clear Button
-                    if (index == 0) {
+                    // +/- button
+                    if (index == 1) {
                       return MyButton(
                         buttontapped: () {
                           setState(() {
+                            // historyAnswer = '';
                             userInput = '';
                             //answer = '';
                           });
@@ -107,14 +120,14 @@ class _HomePageState extends State<HomePage> {
                         textColor: Colors.black,
                       );
                     }
-
-                    // +/- button
-                    else if (index == 1) {
+                    // Clear Button
+                    else if (index == 0) {
                       return MyButton(
                         buttontapped: () {
                           setState(() {
-                            //userInput = '';
+                            userInput = '';
                             answer = '';
+                            historyAnswer = '';
                           });
                         },
                         buttonText: buttons[index],
@@ -205,6 +218,20 @@ class _HomePageState extends State<HomePage> {
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
     eval = double.parse(eval.toStringAsFixed(14));
-    answer = eval.toString();
+    historyAnswer = answer;
+    var asStr = eval.toString();
+    if (asStr.endsWith(".0")) {
+      asStr = asStr.substring(0, asStr.length - 2);
+    }
+
+    String displayInput = userInput;
+
+    displayInput = displayInput.replaceAll("x", " x ");
+    displayInput = displayInput.replaceAll("+", " + ");
+    displayInput = displayInput.replaceAll("-", " - ");
+    displayInput = displayInput.replaceAll("/", " / ");
+
+    answer = displayInput + " = " + asStr;
+    userInput = "";
   }
 }
