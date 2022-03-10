@@ -24,7 +24,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var userInput = '';
   var answer = '';
+  var answerPure = '';
   var historyAnswer = '';
+  var historyAnswerPure = '';
 
 // Array of button
   final List<String> buttons = [
@@ -45,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     '3',
     '-',
     '0',
-    '.',
+    '•',
     '=',
     '+',
   ];
@@ -75,25 +77,39 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        answer,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                      child: new GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            userInput += answerPure;
+                          });
+                        },
+                        child: Text(
+                          answer,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        historyAnswer,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                      child: new GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            userInput += historyAnswerPure;
+                          });
+                        },
+                        child: Text(
+                          historyAnswer,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    )
+                    ),
                   ]),
             ),
           ),
@@ -159,6 +175,19 @@ class _HomePageState extends State<HomePage> {
                         },
                         buttonText: buttons[index],
                         color: Colors.blue[50],
+                        textColor: Colors.black,
+                      );
+                    }
+                    // dot Button
+                    else if (index == 17) {
+                      return MyButton(
+                        buttontapped: () {
+                          setState(() {
+                            userInput += ".";
+                          });
+                        },
+                        buttonText: buttons[index],
+                        color: Colors.white,
                         textColor: Colors.black,
                       );
                     }
@@ -232,6 +261,9 @@ class _HomePageState extends State<HomePage> {
     displayInput = displayInput.replaceAll("/", " / ");
 
     answer = displayInput + " = " + asStr;
-    userInput = "";
+
+    historyAnswerPure = answerPure;
+    answerPure = asStr;
+    userInput = asStr;
   }
 }
