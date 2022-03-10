@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Calculator"),
+        title: new Text("BSMI 计算器"),
       ), //AppBar
       backgroundColor: Colors.white38,
       body: Column(
