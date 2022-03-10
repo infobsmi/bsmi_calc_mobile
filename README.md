@@ -4,7 +4,6 @@
 
 IOS | Android
 --|--
-<img src="https://user-images.githubusercontent.com/278153/155650076-00a9af29-5ab7-4e34-b47a-35bf72a4ab0c.png" width="480px"/> | <img src="https://user-images.githubusercontent.com/278153/155650124-33469888-b831-4c68-94f1-42ce54117fd2.png" width="480px"/>
-
+<img src="https://user-images.githubusercontent.com/278153/157587254-5ef1bedc-d7e0-4580-86b5-00355fd002a7.png" width="480px"/> | <img src="https://user-images.githubusercontent.com/278153/157587280-78616c88-98d2-47cd-8f4a-93e4493a48ac.png" width="480px"/>
 
 
