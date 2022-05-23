@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         userInput,
-                        style: TextStyle(fontSize: 30, color: Colors.white),
+                        style: TextStyle(fontSize: 30, color: Colors.black),
                       ),
                     ),
                     Container(
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                           answer,
                           style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                           historyAnswer,
                           style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
