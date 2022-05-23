@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'buttons.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -55,8 +56,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text("BSMI 计算器"),
+      appBar: AppBar(
+        title: Text("BSMI 计算器"),
       ), //AppBar
       backgroundColor: Colors.white38,
       body: Column(
@@ -69,15 +70,20 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: Text(
+                      child:GestureDetector(
+                        onTap: () {
+                           Clipboard.setData(ClipboardData(text:userInput));
+                        },
+                        child: Text(
                         userInput,
                         style: TextStyle(fontSize: 30, color: Colors.black),
+                      )
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: new GestureDetector(
+                      child:  GestureDetector(
                         onTap: () {
                           setState(() {
                             userInput += answerPure;
@@ -95,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: new GestureDetector(
+                      child:  GestureDetector(
                         onTap: () {
                           setState(() {
                             userInput += historyAnswerPure;
