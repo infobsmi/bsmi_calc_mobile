@@ -1,8 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'buttons.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:window_size/window_size.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if ( !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    setWindowTitle("BSMI 计算器");
+    var tWidth = 512.0;
+    var tHeight = 926.0;
+    setWindowMinSize(Size(tWidth, tHeight));
+    setWindowMaxSize(Size(tWidth, tHeight));
+    //setWindowSize(Size(1024, 800));
+    var platformWindow = await getWindowInfo();
+    Rect frame = Rect.fromCenter(
+      center: Offset(
+        platformWindow.frame.center.dx,
+        platformWindow.frame.center.dy,
+      ),
+      width: tWidth,
+      height: tHeight,
+    );
+    setWindowFrame(frame);
+  }
   runApp(MyApp());
 }
 
@@ -55,8 +79,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text("Calculator"),
+      appBar: AppBar(
+        title: Text("BSMI 计算器"),
       ), //AppBar
       backgroundColor: Colors.white38,
       body: Column(
@@ -69,15 +93,20 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: Text(
+                      child:GestureDetector(
+                        onTap: () {
+                           Clipboard.setData(ClipboardData(text:userInput));
+                        },
+                        child: Text(
                         userInput,
-                        style: TextStyle(fontSize: 30, color: Colors.white),
+                        style: TextStyle(fontSize: 30, color: Colors.black),
+                      )
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: new GestureDetector(
+                      child:  GestureDetector(
                         onTap: () {
                           setState(() {
                             userInput += answerPure;
@@ -87,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                           answer,
                           style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -95,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: EdgeInsets.all(2),
                       alignment: Alignment.centerRight,
-                      child: new GestureDetector(
+                      child:  GestureDetector(
                         onTap: () {
                           setState(() {
                             userInput += historyAnswerPure;
@@ -105,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                           historyAnswer,
                           style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
