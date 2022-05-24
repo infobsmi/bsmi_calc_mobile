@@ -7,13 +7,25 @@ import 'package:math_expressions/math_expressions.dart';
 import 'package:window_size/window_size.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if ( !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
-    setWindowTitle("My App");
-    setWindowMinSize(Size(375, 812));
-    setWindowMaxSize(Size(375, 812));
+    setWindowTitle("BSMI 计算器");
+    var tWidth = 512.0;
+    var tHeight = 926.0;
+    setWindowMinSize(Size(tWidth, tHeight));
+    setWindowMaxSize(Size(tWidth, tHeight));
     //setWindowSize(Size(1024, 800));
+    var platformWindow = await getWindowInfo();
+    Rect frame = Rect.fromCenter(
+      center: Offset(
+        platformWindow.frame.center.dx,
+        platformWindow.frame.center.dy,
+      ),
+      width: tWidth,
+      height: tHeight,
+    );
+    setWindowFrame(frame);
   }
   runApp(MyApp());
 }
