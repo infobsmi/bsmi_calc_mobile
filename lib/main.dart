@@ -1,9 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'buttons.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:window_size/window_size.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    setWindowTitle("My App");
+    setWindowMinSize(Size(375, 812));
+    setWindowMaxSize(Size(375, 812));
+    //setWindowSize(Size(1024, 800));
+  }
   runApp(MyApp());
 }
 
