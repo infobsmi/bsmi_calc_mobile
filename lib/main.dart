@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 import 'buttons.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:window_size/window_size.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  if ( !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     setWindowTitle("My App");
     setWindowMinSize(Size(375, 812));
     setWindowMaxSize(Size(375, 812));
