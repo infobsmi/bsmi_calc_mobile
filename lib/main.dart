@@ -85,8 +85,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          Expanded(
-            flex: 2,
+          Container(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -141,7 +140,6 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
           Expanded(
-              flex: 8,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -153,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                        shrinkWrap: true,
                         itemCount: buttons.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 1 / 0.8,
+                          childAspectRatio: 1 / 0.74,
                           crossAxisCount: 4,
                         ),
                         itemBuilder: (BuildContext context, int index) {
