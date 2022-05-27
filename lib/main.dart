@@ -113,8 +113,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          Expanded(
-            child: Column(
+          Container(
+            height: 80,
+            child:  Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
@@ -168,119 +169,121 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
           Expanded(
-            flex: 2,
             child: Align(
-              alignment: Alignment.bottomCenter,
-              child: GridView.builder(
-                  itemCount: buttons.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: (1 / .74),
-                    crossAxisCount: 4,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    // +/- button
-                    if (index == 1) {
-                      return MyButton(
-                        buttontapped: () {
-                          setState(() {
-                            // historyAnswer = '';
-                            userInput = '';
-                            //answer = '';
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: Colors.blue[50],
-                        textColor: Colors.black,
-                      );
-                    }
-                    // Clear Button
-                    else if (index == 0) {
-                      return MyButton(
-                        buttontapped: () {
-                          setState(() {
-                            userInput = '';
-                            answer = '';
-                            historyAnswer = '';
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: Colors.blue[50],
-                        textColor: Colors.black,
-                      );
-                    }
-                    // % Button
-                    else if (index == 2) {
-                      return MyButton(
-                        buttontapped: () {
-                          setState(() {
-                            userInput += buttons[index];
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: Colors.blue[50],
-                        textColor: Colors.black,
-                      );
-                    }
-                    // Delete Button
-                    else if (index == 3) {
-                      return MyButton(
-                        buttontapped: () {
-                          setState(() {
-                            userInput =
-                                userInput.substring(0, userInput.length - 1);
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: Colors.blue[50],
-                        textColor: Colors.black,
-                      );
-                    }
-                    // dot Button
-                    else if (index == 17) {
-                      return MyButton(
-                        buttontapped: () {
-                          setState(() {
-                            userInput += ".";
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: Colors.white,
-                        textColor: Colors.black,
-                      );
-                    }
-                    // Equal_to Button
-                    else if (index == 18) {
-                      return MyButton(
-                        buttontapped: () {
-                          setState(() {
-                            equalPressed();
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: Colors.orange[700],
-                        textColor: Colors.white,
-                      );
-                    }
+                alignment: Alignment.bottomCenter,
+                child:
+                      GridView.builder(
+                          itemCount: buttons.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 1/0.8,
+                            crossAxisCount: 4,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            // +/- button
+                            if (index == 1) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    // historyAnswer = '';
+                                    userInput = '';
+                                    //answer = '';
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Colors.blue[50],
+                                textColor: Colors.black,
+                              );
+                            }
+                            // Clear Button
+                            else if (index == 0) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput = '';
+                                    answer = '';
+                                    historyAnswer = '';
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Colors.blue[50],
+                                textColor: Colors.black,
+                              );
+                            }
+                            // % Button
+                            else if (index == 2) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput += buttons[index];
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Colors.blue[50],
+                                textColor: Colors.black,
+                              );
+                            }
+                            // Delete Button
+                            else if (index == 3) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput = userInput.substring(
+                                        0, userInput.length - 1);
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Colors.blue[50],
+                                textColor: Colors.black,
+                              );
+                            }
+                            // dot Button
+                            else if (index == 17) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput += ".";
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Colors.white,
+                                textColor: Colors.black,
+                              );
+                            }
+                            // Equal_to Button
+                            else if (index == 18) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    equalPressed();
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Colors.orange[700],
+                                textColor: Colors.white,
+                              );
+                            }
 
-                    // other buttons
-                    else {
-                      return MyButton(
-                        buttontapped: () {
-                          setState(() {
-                            userInput += buttons[index];
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: isOperator(buttons[index])
-                            ? Colors.blueAccent
-                            : Colors.white,
-                        textColor: isOperator(buttons[index])
-                            ? Colors.white
-                            : Colors.black,
-                      );
-                    }
-                  }),
-            ),
+                            // other buttons
+                            else {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput += buttons[index];
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: isOperator(buttons[index])
+                                    ? Colors.blueAccent
+                                    : Colors.white,
+                                textColor: isOperator(buttons[index])
+                                    ? Colors.white
+                                    : Colors.black,
+                              );
+                            }
+                          }),
+
+          ),
           ),
         ],
       ),
