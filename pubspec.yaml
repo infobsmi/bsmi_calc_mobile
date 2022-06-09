@@ -99,5 +99,6 @@ msix_config:
   publisher_display_name: netroby
   identity_name: 47274netroby.BSMI
   publisher: CN=26F80C26-3E61-417E-8691-01CA07C654BC
+  logo_path: ./windows/runner/resources/app_icon_1024.png
   msix_version: 1.0.0.0
   store: true
