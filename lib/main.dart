@@ -6,6 +6,7 @@ import 'buttons.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:window_size/window_size.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:developer' as developer;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +53,8 @@ class _HomePageState extends State<HomePage> {
   var historyAnswer = '';
   var historyAnswerPure = '';
 
+  final FocusNode _focusNode = FocusNode();
+
 // Array of button
   final List<String> buttons = [
     'CLS',
@@ -83,184 +86,191 @@ class _HomePageState extends State<HomePage> {
         title: Text("BSMI 计算器"),
       ), //AppBar
       backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          Container(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
+      body: RawKeyboardListener(
+        autofocus: true,
+        focusNode: _focusNode,
+        onKey: (key) => handleKey(key),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(2),
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                          onTap: () {
+                            Clipboard.setData(ClipboardData(text: userInput));
+                          },
+                          child: Text(
+                            userInput,
+                            style: TextStyle(fontSize: 30, color: Colors.black),
+                          )),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(2),
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
                         onTap: () {
-                          Clipboard.setData(ClipboardData(text: userInput));
+                          setState(() {
+                            userInput += answerPure;
+                          });
                         },
                         child: Text(
-                          userInput,
-                          style: TextStyle(fontSize: 30, color: Colors.black),
-                        )),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          userInput += answerPure;
-                        });
-                      },
-                      child: Text(
-                        answer,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          userInput += historyAnswerPure;
-                        });
-                      },
-                      child: Text(
-                        historyAnswer,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ]),
-          ),
-          Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  // Your elements here
-                  Container(
-                    child: GridView.builder(
-                       shrinkWrap: true,
-                        itemCount: buttons.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 1 / 0.74,
-                          crossAxisCount: 4,
+                          answer,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
                         ),
-                        itemBuilder: (BuildContext context, int index) {
-                          // +/- button
-                          if (index == 1) {
-                            return MyButton(
-                              buttontapped: () {
-                                setState(() {
-                                  // historyAnswer = '';
-                                  userInput = '';
-                                  //answer = '';
-                                });
-                              },
-                              buttonText: buttons[index],
-                              color: Colors.blue[50],
-                              textColor: Colors.black,
-                            );
-                          }
-                          // Clear Button
-                          else if (index == 0) {
-                            return MyButton(
-                              buttontapped: () {
-                                setState(() {
-                                  userInput = '';
-                                  answer = '';
-                                  historyAnswer = '';
-                                });
-                              },
-                              buttonText: buttons[index],
-                              color: Colors.blue[50],
-                              textColor: Colors.black,
-                            );
-                          }
-                          // % Button
-                          else if (index == 2) {
-                            return MyButton(
-                              buttontapped: () {
-                                setState(() {
-                                  userInput += buttons[index];
-                                });
-                              },
-                              buttonText: buttons[index],
-                              color: Colors.blue[50],
-                              textColor: Colors.black,
-                            );
-                          }
-                          // Delete Button
-                          else if (index == 3) {
-                            return MyButton(
-                              buttontapped: () {
-                                setState(() {
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(2),
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            userInput += historyAnswerPure;
+                          });
+                        },
+                        child: Text(
+                          historyAnswer,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                // Your elements here
+                Container(
+                  child: GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: buttons.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1 / 0.74,
+                        crossAxisCount: 4,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        // +/- button
+                        if (index == 1) {
+                          return MyButton(
+                            buttontapped: () {
+                              setState(() {
+                                // historyAnswer = '';
+                                userInput = '';
+                                //answer = '';
+                              });
+                            },
+                            buttonText: buttons[index],
+                            color: Colors.blue[50],
+                            textColor: Colors.black,
+                          );
+                        }
+                        // Clear Button
+                        else if (index == 0) {
+                          return MyButton(
+                            buttontapped: () {
+                              setState(() {
+                                userInput = '';
+                                answer = '';
+                                historyAnswer = '';
+                              });
+                            },
+                            buttonText: buttons[index],
+                            color: Colors.blue[50],
+                            textColor: Colors.black,
+                          );
+                        }
+                        // % Button
+                        else if (index == 2) {
+                          return MyButton(
+                            buttontapped: () {
+                              setState(() {
+                                userInput += buttons[index];
+                              });
+                            },
+                            buttonText: buttons[index],
+                            color: Colors.blue[50],
+                            textColor: Colors.black,
+                          );
+                        }
+                        // Delete Button
+                        else if (index == 3) {
+                          return MyButton(
+                            buttontapped: () {
+                              setState(() {
+                                if (userInput.isNotEmpty) {
                                   userInput = userInput.substring(
                                       0, userInput.length - 1);
-                                });
-                              },
-                              buttonText: buttons[index],
-                              color: Colors.blue[50],
-                              textColor: Colors.black,
-                            );
-                          }
-                          // dot Button
-                          else if (index == 17) {
-                            return MyButton(
-                              buttontapped: () {
-                                setState(() {
-                                  userInput += ".";
-                                });
-                              },
-                              buttonText: buttons[index],
-                              color: Colors.white,
-                              textColor: Colors.black,
-                            );
-                          }
-                          // Equal_to Button
-                          else if (index == 18) {
-                            return MyButton(
-                              buttontapped: () {
-                                setState(() {
-                                  equalPressed();
-                                });
-                              },
-                              buttonText: buttons[index],
-                              color: Colors.orange[700],
-                              textColor: Colors.white,
-                            );
-                          }
+                                }
+                              });
+                            },
+                            buttonText: buttons[index],
+                            color: Colors.blue[50],
+                            textColor: Colors.black,
+                          );
+                        }
+                        // dot Button
+                        else if (index == 17) {
+                          return MyButton(
+                            buttontapped: () {
+                              setState(() {
+                                userInput += ".";
+                              });
+                            },
+                            buttonText: buttons[index],
+                            color: Colors.white,
+                            textColor: Colors.black,
+                          );
+                        }
+                        // Equal_to Button
+                        else if (index == 18) {
+                          return MyButton(
+                            buttontapped: () {
+                              setState(() {
+                                equalPressed();
+                              });
+                            },
+                            buttonText: buttons[index],
+                            color: Colors.orange[700],
+                            textColor: Colors.white,
+                          );
+                        }
 
-                          // other buttons
-                          else {
-                            return MyButton(
-                              buttontapped: () {
-                                setState(() {
-                                  userInput += buttons[index];
-                                });
-                              },
-                              buttonText: buttons[index],
-                              color: isOperator(buttons[index])
-                                  ? Colors.blueAccent
-                                  : Colors.white,
-                              textColor: isOperator(buttons[index])
-                                  ? Colors.white
-                                  : Colors.black,
-                            );
-                          }
-                        }),
-                  )
-                ],
-              )),
-        ],
+                        // other buttons
+                        else {
+                          return MyButton(
+                            buttontapped: () {
+                              setState(() {
+                                userInput += buttons[index];
+                              });
+                            },
+                            buttonText: buttons[index],
+                            color: isOperator(buttons[index])
+                                ? Colors.blueAccent
+                                : Colors.white,
+                            textColor: isOperator(buttons[index])
+                                ? Colors.white
+                                : Colors.black,
+                          );
+                        }
+                      }),
+                )
+              ],
+            )),
+          ],
+        ),
       ),
     );
   }
@@ -282,7 +292,11 @@ class _HomePageState extends State<HomePage> {
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
     eval = double.parse(eval.toStringAsFixed(14));
-    historyAnswer = answer;
+
+    setState(() {
+      historyAnswer = answer;
+    });
+
     var asStr = eval.toString();
     if (asStr.endsWith(".0")) {
       asStr = asStr.substring(0, asStr.length - 2);
@@ -295,10 +309,48 @@ class _HomePageState extends State<HomePage> {
     displayInput = displayInput.replaceAll("-", " - ");
     displayInput = displayInput.replaceAll("/", " / ");
 
-    answer = displayInput + " = " + asStr;
 
-    historyAnswerPure = answerPure;
-    answerPure = asStr;
-    userInput = asStr;
+
+
+    setState(() {
+      answer = displayInput + " = " + asStr;
+
+      historyAnswerPure = answerPure;
+      answerPure = asStr;
+      userInput = asStr;
+    });
   }
+
+  handleKey(RawKeyEvent key) {
+    if(key.runtimeType.toString() == 'RawKeyDownEvent') {
+      developer.log("user input by keyboard code in debugName: " + key.logicalKey.toStringShort());
+      developer.log("user input by keyboard: " + key.data.keyLabel.toString());
+
+      developer.log(" is equal pressed: " +  (key.logicalKey == LogicalKeyboardKey.equal).toString());
+
+      if (key.logicalKey == LogicalKeyboardKey.backspace) {
+        setState(() {
+          if (userInput.isNotEmpty) {
+            userInput = userInput.substring(
+                0, userInput.length - 1);
+          }
+        });
+      } else if (key.logicalKey == LogicalKeyboardKey.enter) {
+        developer.log("equals pressed");
+        equalPressed();
+      } else {
+        var keyCode = key.data.keyLabel.toString();
+        if (keyCode == "=") {
+          developer.log("equals pressed");
+          equalPressed();
+        } else {
+          setState(() {
+            userInput += keyCode;
+          }
+          );
+        }
+      }
+    }
+  }
+
 }
