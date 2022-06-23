@@ -309,9 +309,6 @@ class _HomePageState extends State<HomePage> {
     displayInput = displayInput.replaceAll("-", " - ");
     displayInput = displayInput.replaceAll("/", " / ");
 
-
-
-
     setState(() {
       answer = displayInput + " = " + asStr;
 
@@ -322,17 +319,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   handleKey(RawKeyEvent key) {
-    if(key.runtimeType.toString() == 'RawKeyDownEvent') {
-      developer.log("user input by keyboard code in debugName: " + key.logicalKey.toStringShort());
+    if (key.runtimeType.toString() == 'RawKeyDownEvent') {
+      developer.log("user input by keyboard code in debugName: " +
+          key.logicalKey.toStringShort());
       developer.log("user input by keyboard: " + key.data.keyLabel.toString());
 
-      developer.log(" is equal pressed: " +  (key.logicalKey == LogicalKeyboardKey.equal).toString());
+      developer.log(" is equal pressed: " +
+          (key.logicalKey == LogicalKeyboardKey.equal).toString());
 
       if (key.logicalKey == LogicalKeyboardKey.backspace) {
         setState(() {
           if (userInput.isNotEmpty) {
-            userInput = userInput.substring(
-                0, userInput.length - 1);
+            userInput = userInput.substring(0, userInput.length - 1);
           }
         });
       } else if (key.logicalKey == LogicalKeyboardKey.enter) {
@@ -346,11 +344,9 @@ class _HomePageState extends State<HomePage> {
         } else {
           setState(() {
             userInput += keyCode;
-          }
-          );
+          });
         }
       }
     }
   }
-
 }
