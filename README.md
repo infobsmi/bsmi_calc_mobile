@@ -12,3 +12,12 @@ IOS | Android
 ```bash 
 flutter pub run msix:create
 ```
+
+## macos 构建
+
+```bash 
+flutter build macos
+
+```
+
+构建完了的文件，位于build子目录下面
